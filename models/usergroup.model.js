@@ -6,8 +6,8 @@ const userGroupModel = (sequelize) => {
     {
       id: {
         type: DataTypes.INTEGER,
-        primaryKey: true,
         autoIncrement: true,
+        primaryKey: true,
       },
       role: {
         type: DataTypes.STRING,
@@ -25,6 +25,7 @@ const userGroupModel = (sequelize) => {
     },
     { sequelize, modelName: "UserGroup", tableName: "users_groups" }
   );
+  return UserGroup;
 };
 
 module.exports = { userGroupModel };

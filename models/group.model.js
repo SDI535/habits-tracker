@@ -5,9 +5,9 @@ const groupModel = (sequelize) => {
   Group.init(
     {
       id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
-        autoIncrement: true,
       },
       groupName: {
         type: DataTypes.STRING,
@@ -26,6 +26,7 @@ const groupModel = (sequelize) => {
     },
     { sequelize, modelName: "Group", tableName: "groups" }
   );
+  return Group;
 };
 
 module.exports = { groupModel };

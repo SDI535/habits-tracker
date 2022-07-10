@@ -6,8 +6,8 @@ const habitGroupModel = (sequelize) => {
     {
       id: {
         type: DataTypes.INTEGER,
-        primaryKey: true,
         autoIncrement: true,
+        primaryKey: true,
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -20,6 +20,7 @@ const habitGroupModel = (sequelize) => {
     },
     { sequelize, modelName: "HabitGroup", tableName: "habits_groups" }
   );
+  return HabitGroup;
 };
 
 module.exports = { habitGroupModel };

@@ -5,9 +5,9 @@ const userModel = (sequelize) => {
   User.init(
     {
       id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
-        autoIncrement: true,
       },
       name: {
         type: DataTypes.STRING,
@@ -33,6 +33,7 @@ const userModel = (sequelize) => {
     },
     { sequelize, modelName: "User", tableName: "users" }
   );
+  return User;
 };
 
 module.exports = { userModel };

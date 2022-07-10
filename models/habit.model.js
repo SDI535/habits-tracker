@@ -1,13 +1,14 @@
 const { DataTypes, Model } = require("sequelize");
+const { userModel } = require("./user.model");
 
 const habitModel = (sequelize) => {
   class Habit extends Model {}
   Habit.init(
     {
       id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
-        autoIncrement: true,
       },
       title: {
         type: DataTypes.STRING,
@@ -33,6 +34,7 @@ const habitModel = (sequelize) => {
     },
     { sequelize, modelName: "Habit", tableName: "habits" }
   );
+  return Habit;
 };
 
 module.exports = { habitModel };

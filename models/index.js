@@ -1,4 +1,4 @@
-const { Sequelize } = require("sequelize");
+const { Sequelize, DataTypes } = require("sequelize");
 const { userModel } = require("./user.model");
 const { userGroupModel } = require("./usergroup.model");
 const { groupModel } = require("./group.model");
@@ -36,24 +36,39 @@ const testConnection = async () => {
 };
 
 const User = userModel(sequelize);
+const Habit = habitModel(sequelize);
 const UserGroup = userGroupModel(sequelize);
 const Group = groupModel(sequelize);
-const Habit = habitModel(sequelize);
 const HabitGroup = habitGroupModel(sequelize);
 
 //Relationships
-User.hasMany(Habit);
-User.hasMany(UserGroup);
-Group.hasMany(UserGroup);
-Habit.hasMany(HabitGroup);
-Group.hasMany(HabitGroup);
+User.hasMany(Habit, {
+  foreignKey: "user_id",
+});
+
+Habit.belongsTo(User, {
+  foreignKey: "user_id",
+});
+
+User.hasMany(UserGroup, {
+  foreignKey: "user_id",
+});
+Group.hasMany(UserGroup, {
+  foreignKey: "group_id",
+});
+Habit.hasMany(HabitGroup, {
+  foreignKey: "habit_id",
+});
+Group.hasMany(HabitGroup, {
+  foreignKey: "group_id",
+});
 
 module.exports = {
   sequelize,
   testConnection,
   User,
+  Habit,
   UserGroup,
   Group,
-  Habit,
   HabitGroup,
 };
