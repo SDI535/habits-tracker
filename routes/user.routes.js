@@ -3,6 +3,7 @@ const router = express.Router();
 const UserController = require("../controllers/user.controller");
 const UserGroupController = require("../controllers/usergroup.controller");
 const HabitController = require("../controllers/habit.controller");
+const authenticateJWT = require("../middleware/userauth.middleware")
 
 const usercontroller = new UserController();
 const usergroupcontroller = new UserGroupController();
@@ -18,10 +19,13 @@ router.post("/register", usercontroller.register);
 //login
 router.post("/login", usercontroller.login);
 
-//GET all groups a user belongs to
-router.get("/:userId/groups", usergroupcontroller.listGroups);
+//Testing purposes to retrieve 1 record of user details with auth
+router.get("/userDetails",authenticateJWT, usercontroller.userDetails);
 
-//GET all habits for a user
-router.get("/:userId/habits", habitcontroller.list);
+// //GET all groups a user belongs to
+// router.get("/:userId/groups", usergroupcontroller.listGroups);
+
+// //GET all habits for a user
+// router.get("/:userId/habits", habitcontroller.list);
 
 module.exports = router;

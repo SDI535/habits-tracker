@@ -10,6 +10,25 @@ class UserController {
       data: result.data,
     });
   }
+  async login(req,res,next){
+    const {email, password} = req.body;
+    const result = await userServices.login(email, password);
+    res.status(result.status).json({
+      success: result.success,
+      message: result.message,
+      data: result.data,
+    })
+  }
+  //Testing purposes to retrieve 1 record of user details with auth
+  async userDetails(req, res,next){
+    const {email} = req.body;
+    const result = await userServices.userDetails(email);
+    res.status(result.status).json({
+      success: result.success,
+      message: result.message,
+      data: result.data,
+    })
+  }
 }
 
 module.exports = UserController;
