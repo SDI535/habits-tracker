@@ -10,6 +10,7 @@ const authenticateJWT = (req, res, next) => {
         const token = authHeader.split(' ')[1];
         jwt.verify(token, secretKey, (err, user)=>{
             if (err){
+                res.status(400)
                 res.json({success: false, message: "JWT Verification failed"})
             } else {
                 req.user = user;
@@ -17,6 +18,7 @@ const authenticateJWT = (req, res, next) => {
             }
         })
     } else {
+        res.status(400)
         res.json({success: false, message: "authHeader is null"})
     }
 }
