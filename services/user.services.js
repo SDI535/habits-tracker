@@ -1,4 +1,4 @@
-const { User } = require("../models");
+const { User, UserGroup, Group, Habit } = require("../models");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
@@ -30,13 +30,13 @@ module.exports = {
             }
             console.log("hashed value: ", hash);
             resolve(hash);
-          })
-        })
+          });
+        });
 
         const newUser = await User.create({
           name: name,
           email: email,
-          password: passwordHashed
+          password: passwordHashed,
         });
 
         result.message = "Email registered successfully!";
@@ -59,7 +59,10 @@ module.exports = {
       data: null,
     };
     try {
-      const user = await User.findOne({ attributes: ["id", "password"], where: { email } });
+      const user = await User.findOne({
+        attributes: ["id", "password"],
+        where: { email },
+      });
       if (user) {
         const retrievedId = user.dataValues.id;
         const retrievedPassword = user.dataValues.password;
@@ -72,21 +75,24 @@ module.exports = {
             }
             console.log("result: ", result);
             resolve(result);
-          })
-        })
+          });
+        });
 
         if (compare == false) {
           result.message = `Wrong password. Please re-enter`;
           result.status = 404;
-          return result
+          return result;
         } else {
-          const token = jwt.sign({ userID: retrievedId }, process.env.SECRET_KEY, { expiresIn: "1d" })
+          const token = jwt.sign(
+            { userID: retrievedId },
+            process.env.SECRET_KEY,
+            { expiresIn: "1d" }
+          );
           result.message = "Verified user and token successfully created";
           result.status = 201;
           result.data = token;
           return result;
         }
-
       } else {
         result.message = "Email does not exist. Please register first.";
         result.status = 500;
@@ -123,5 +129,53 @@ module.exports = {
       result.status = 400;
       return result;
     }
-  }
+  },
+  listGroups: async (userId) => {
+    let result = {
+      success: true,
+      message: null,
+      status: null,
+      data: null,
+    };
+    try {
+      const groups = await Group.findAll({
+        include: [{ model: UserGroup, where: { user_id: userId } }],
+      });
+      if (groups) {
+        result.message = "Successfully retrieved groups!";
+        result.status = 201;
+        result.data = groups;
+        return result;
+      }
+    } catch (error) {
+      result.success = false;
+      result.message = error.message;
+      result.status = 400;
+      return result;
+    }
+  },
+  listHabits: async (userId) => {
+    let result = {
+      success: true,
+      message: null,
+      status: null,
+      data: null,
+    };
+    try {
+      const habits = await Habit.findAll({
+        where: { user_id: userId },
+      });
+      if (habits) {
+        result.message = "Successfully retrieved habits!";
+        result.status = 201;
+        result.data = habits;
+        return result;
+      }
+    } catch (error) {
+      result.success = false;
+      result.message = error.message;
+      result.status = 400;
+      return result;
+    }
+  },
 };
