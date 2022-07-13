@@ -19,9 +19,9 @@ router.post("/login", usercontroller.login);
 router.get("/userDetails", authenticateJWT, usercontroller.userDetails);
 
 // //GET all groups a user belongs to
-router.get("/:userId/groups", usercontroller.listGroups);
+router.get("/:userId/groups", authenticateJWT, usercontroller.listGroups);
 
 // //GET all habits for a user
-router.get("/:userId/habits", usercontroller.listHabits);
+router.get("/:userId/habits", authenticateJWT, usercontroller.listHabits);
 
 module.exports = router;
