@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === "production") {
   });
 } else {
   //for dev
-  sequelize = new Sequelize(process.env.PG_DB, process.env.PG_USERNAME, process.env.PG_PASSWORD, {
+  sequelize = new Sequelize("habits_tracker", "postgres", "ajunhui1", {
     host: process.env.PG_HOST,
     dialect: "postgres",
   });

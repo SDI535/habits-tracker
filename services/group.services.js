@@ -26,4 +26,63 @@ module.exports = {
     }
     return result;
   },
+  deleteOne: async (userId, groupId) => {
+    let result = {
+      success: true,
+      message: null,
+      status: null,
+      data: null,
+    };
+    try {
+      const ownercheck = await UserGroup.findOne({ where: { group_id: groupId, user_id: userId } });
+      if (!ownercheck) {
+        result.message = "User is not owner";
+        result.status = 500;
+        result.success = false;
+        return result;
+      }
+      else if (ownercheck.role = "owner") {
+        const delUserGroup = await UserGroup.destroy({ where: { group_id: groupId } });
+        const delGroup = await Group.destroy({ where: { id: groupId } });
+        result.message = "Group deleted successfully!";
+        result.status = 200;
+        result.data = delGroup;
+      }
+    } catch (error) {
+      result.success = false;
+      result.message = error.message;
+      result.status = 400;
+    }
+    return result;
+  },
+  updateOne: async (groupName, userId, groupId) => {
+    let result = {
+      success: true,
+      message: null,
+      status: null,
+      data: null,
+    };
+    try {
+      const ownercheck = await UserGroup.findOne({ where: { group_id: groupId, user_id: userId } });
+      if (!ownercheck) {
+        result.message = "User is not owner";
+        result.status = 500;
+        result.success = false;
+        return result;
+      }
+      else if (ownercheck.role = "owner") {
+        const updGroup = await Group.findOne({ where: { id: groupId } });
+        updGroup.groupName = groupName
+        await updGroup.save();
+        result.message = "Group edited successfully!";
+        result.status = 200;
+        result.data = updGroup;
+      }
+    } catch (error) {
+      result.success = false;
+      result.message = error.message;
+      result.status = 400;
+    }
+    return result;
+  },
 };
