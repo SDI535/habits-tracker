@@ -44,7 +44,7 @@ module.exports = {
     }
     return result;
   },
-  deleteOne: async (userId, groupId, habitId) => {
+  deleteOne: async (groupId, habitId, userId) => {
     let result = {
       success: true,
       message: null,
@@ -52,15 +52,17 @@ module.exports = {
       data: null,
     };
     try {
-      const checkUser = await HabitGroup.findOne({
-        where: { user_id: userId, habit_id: habitId, group_id: groupId}
-      }); if (!checkUser) {
+      const checkUser = await Habit.findOne({
+        where: { id: habitId }
+      });
+      console.log(checkUser);
+      if (checkUser.user_id !== userId) {
         result.message = "User is not owner of this habit";
         result.status = 500;
         result.success = false;
-      } else if (checkUser) {
+      } else {
         const deleteHabit = await HabitGroup.destroy ({ where: { habit_id: habitId } })
-        result.message = "Habit deleted successfully";
+        result.message = "Habit is removed from group successfully";
         result.status = 201;
         result.data = deleteHabit;
       }

@@ -22,10 +22,9 @@ class HabitGroupController {
     });
   }
   async deleteOne(req, res, next) {
-    const { groupId } = req.body;
-    const { habitId } = req.params;
-    const result = await habitGroupServices.deleteOne(groupId, habitId);
-    res.send("deleting");
+    const { groupId, habitId } = req.params;
+    const { userId } = req.body;
+    const result = await habitGroupServices.deleteOne(groupId, habitId, userId);
     res.status(result.status).json({
       success: result.success,
       message: result.message,
