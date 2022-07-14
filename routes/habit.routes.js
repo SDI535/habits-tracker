@@ -10,11 +10,7 @@ const verifyToken = require("../middleware/userauth.middleware");
 router.post("/:userId/habits", habitcontroller.createOne);
 
 // DELETE one habit
-router.delete(
-  "/:userId/habits/:habitId",
-  verifyToken,
-  habitcontroller.deleteOne
-);
+router.delete("/:userId/habits/:habitId",habitcontroller.deleteOne);
 
 //UPDATE one habit
 router.put("/:userId/habits/:habitId", habitcontroller.updateOne);

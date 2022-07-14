@@ -7,7 +7,7 @@ const usergroupcontroller = new UserGroupController();
 // const verifyToken = require("../middleware/userauth.middleware");
 
 //GET all members in a group
-router.get("/groups/:groupId/members", usergroupcontroller.listMembers);
+// router.get("/groups/:groupId/members", usergroupcontroller.listMembers);
 
 //ADD one member to a group
 router.post("/groups/:groupId/members/:userId", usergroupcontroller.addOne);
