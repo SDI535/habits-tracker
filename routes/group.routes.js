@@ -10,17 +10,18 @@ const UserGroupController = new UserGroupController();
 const verifyToken = require("../middleware/userauth.middleware");
 
 //CREATE one group
+// router.post("/:userId/groups", verifyToken, groupcontroller.createOne); //Original
 
-router.post("/:userId/groups", verifyToken, groupcontroller.createOne);
+router.post("/:userId/groups", groupcontroller.createOne);
 
-//DELETE one group
-router.delete(
-  "/:userId/groups/:groupId",
-  verifyToken,
-  groupcontroller.deleteOne
-);
+// //DELETE one group
+// router.delete(
+//   "/:userId/groups/:groupId",
+//   verifyToken,
+//   groupcontroller.deleteOne
+// );
 
-//UPDATE one group
-router.put("/:userId/groups/:groupId", verifyToken, groupcontroller.updateOne);
+// //UPDATE one group
+// router.put("/:userId/groups/:groupId", verifyToken, groupcontroller.updateOne);
 
 module.exports = router;
