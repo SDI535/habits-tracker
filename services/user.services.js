@@ -106,6 +106,41 @@ module.exports = {
       return result;
     }
   },
+  logout: async (userId) => {
+    let result = {
+      success: true,
+      message: null,
+      status: null,
+      data: null,
+    };
+    try {
+      const user = await User.findOne({
+        where: { id: userId },
+      });
+      if (user) {
+        const retrievedId = user.dataValues.id;
+        const token = jwt.sign(
+          { userID: retrievedId },
+          process.env.SECRET_KEY,
+          { expiresIn: "1" }
+        );
+        result.message = "User logged out successfully";
+        result.status = 200;
+        result.data = token;
+        return result;
+      } else {
+        result.message = "User not logged in";
+        result.status = 404;
+        return result;
+      }
+    } catch (error) {
+      result.success = false;
+      result.message = error.message;
+      result.status = 400;
+      return result;
+    }
+  },
+
   //Testing purposes to retrieve 1 record of user details with auth
   userDetails: async (email) => {
     let result = {
