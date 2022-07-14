@@ -15,6 +15,9 @@ router.post("/register", usercontroller.register);
 //login
 router.post("/login", usercontroller.login);
 
+//logout
+router.get("/:userId/logout", authenticateJWT, usercontroller.logout);
+
 //Testing purposes to retrieve 1 record of user details with auth
 router.get("/userDetails", authenticateJWT, usercontroller.userDetails);
 

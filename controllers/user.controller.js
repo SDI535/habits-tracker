@@ -19,6 +19,17 @@ class UserController {
       data: result.data,
     });
   }
+
+  async logout(req, res, next) {
+    const { userId } = req.params;
+    const result = await userServices.logout(userId);
+    res.status(result.status).json({
+      success: result.success,
+      message: result.message,
+      data: result.data,
+    });
+  }
+
   //Testing purposes to retrieve 1 record of user details with auth
   async userDetails(req, res, next) {
     const { email } = req.body;
