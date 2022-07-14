@@ -19,6 +19,7 @@ class UserController {
       data: result.data,
     });
   }
+
   //Testing purposes to retrieve 1 record of user details with auth
   async userDetails(req, res, next) {
     const { email } = req.body;
