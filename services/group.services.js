@@ -9,7 +9,7 @@ module.exports = {
       data: null,
     };
     try {
-      const newGroup = await Group.create({ groupName });
+      const newGroup = await Group.create({ groupName, user_id: userId });
       result.message = "Group created successfully!";
       result.status = 201;
       result.data = newGroup;
